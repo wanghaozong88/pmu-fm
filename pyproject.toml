@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pmu-fm"
+version = "0.1.0"
+description = "Online PMU stream to local time-series foundation model bridge"
+readme = "README.md"
+requires-python = ">=3.11,<3.14"
+license = "Apache-2.0"
+dependencies = ["numpy==2.2.6", "pandas==2.3.3", "psutil==7.0.0"]
+
+[project.optional-dependencies]
+chronos = ["chronos-forecasting==2.3.2", "torch==2.8.0", "transformers==4.57.6", "accelerate==1.12.0", "huggingface-hub==0.36.2"]
+timesfm = ["timesfm==3.0.2", "torch==2.8.0", "huggingface-hub==0.36.2"]
+timesfm3 = ["timesfm==3.0.2", "torch==2.8.0", "huggingface-hub==0.36.2"]
+timestral = ["timestral @ https://github.com/mistralai/timestral/archive/a534bdbd244d64f3d9d743f46c7bf6fc330ed4ff.zip", "torch==2.8.0", "huggingface-hub==0.36.2"]
+test = ["pytest==8.4.2", "ruff==0.15.6"]
+interop = ["synchrophasor==1.0.0a0", "pySynphasor==0.1.0", "scapy==2.7.0"]
+
+[project.scripts]
+pmu-fm = "pmu_fm.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src", "."]
+markers = ["real_model: requires explicitly configured local model weights", "external: independent C37.118 decoder over TCP", "gui: requires --run-gui and a desktop display"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py311"

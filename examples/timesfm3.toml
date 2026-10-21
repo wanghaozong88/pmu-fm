@@ -1,0 +1,18 @@
+# TimesFM-3 local weights are for non-commercial, non-production use only.
+# Online input; set source endpoint and channels before running.
+# Install pmu-fm[timesfm3] and prepare the official local checkpoint separately.
+schema_version = 1
+
+[source]
+host = "127.0.0.1"
+port = 4712
+channels = []
+
+[model]
+backend = "timesfm30"
+local_dir = "../models/timesfm-3.0-pytorch"
+revision = "43046b85ec22d584a13f8098c2ed39c889e129c2"
+device = "cpu"
+
+[files]
+directory = "../runs"

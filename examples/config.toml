@@ -1,0 +1,58 @@
+# Template: set the source endpoint, stream ID, channels and local model directory.
+# For the bundled test source, use its printed port and stream ID 1.
+# Paths are relative to this file. No DataStreamer or private configuration is needed.
+schema_version = 1
+
+[source]
+timestamp_tolerance_seconds = 0.0 # 0 = one wire tick; set 0.001 for verified millisecond-rounded source time
+mode = "connect" # connect: remote endpoint; listen: local bind endpoint, one active source
+host = "127.0.0.1"
+port = 4712
+id_code = 1
+allow_start = false
+command_version = "auto" # bounded CFG-2 probing; explicit 1 or 2 overrides automatic selection
+timeout_seconds = 5.0
+reconnect_seconds = 2.0
+reorder_seconds = 0.1
+channels = [] # Read CFG-2 in the GUI and select channels before Start.
+queue_size = 1024
+
+[model]
+backend = "chronos2" # chronos2 / timesfm25 / timestral / timesfm30
+local_dir = "../models/chronos-2"
+revision = "local"
+device = "cpu"
+context_seconds = 4.0
+horizon_seconds = 1.0
+interval_seconds = 1.0
+input_interval_seconds = 0.0
+cpu_threads = 4
+load_timeout_seconds = 180.0
+timeout_seconds = 120.0
+memory_mb = 4096
+max_channels = 32
+
+[script]
+path = ""
+timeout_seconds = 10.0
+max_missing_samples = 0
+
+[network]
+enabled = true
+frame_version = 1 # shared CFG-2/DATA message set; use 2 for peers requiring that encoding
+host = "127.0.0.1"
+port = 4713
+id_code = 50000
+pmu_id_start = 50001
+leads_seconds = [1.0]
+max_clients = 8
+queue_size = 4
+send_timeout_seconds = 2.0
+
+[files]
+enabled = true
+directory = "../runs"
+queue_size = 64
+rows_per_segment = 100000
+flush_seconds = 1.0
+debug_windows = false
